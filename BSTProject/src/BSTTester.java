@@ -25,7 +25,9 @@
    tree.add("G");
 
    tree.printInOrder();
+   System.out.println();
    tree.printPostOrder();
+   System.out.println();
    tree.printPreOrder();
 	
  }
