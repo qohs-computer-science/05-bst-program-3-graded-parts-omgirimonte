@@ -113,4 +113,31 @@ public class BST implements BSTInterface
         }
     }
         
+    public boolean delete(Comparable old){
+        if (root==null){
+            return false;
+        }
+        else{
+            if (old.compareTo(root.getValue())==0){
+                //deleteRoot(root);
+                return true;
+            }
+            else{
+                if (old.compareTo(root.getValue())<=0){
+                    if (root.getLeft()==null){
+                        return false;
+                    }
+                }
+                else{
+                    if (root.getLeft().getValue().compareTo(old)==0){
+                        //doDelete(root,root,getLeft(), true);
+                        return true;
+                    }
+                    else{
+                        //return deleteHelper(old,root.getLeft());
+                    }
+                }   
+            }
+        }
+    }
 }
