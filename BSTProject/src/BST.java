@@ -119,25 +119,158 @@ public class BST implements BSTInterface
         }
         else{
             if (old.compareTo(root.getValue())==0){
-                //deleteRoot(root);
-                return true;
+                    deleteRoot();
+                    return true;
             }
             else{
                 if (old.compareTo(root.getValue())<=0){
                     if (root.getLeft()==null){
                         return false;
                     }
+                    else{
+                        if (old.compareTo(root.getLeft())==0){
+                            doDelete(root,root.getLeft(),true);
+                            return true;
+                        }
+                        else{
+                            return deleteHelper(old,root.getLeft());
+                        }
+                    }
                 }
                 else{
-                    if (root.getLeft().getValue().compareTo(old)==0){
-                        //doDelete(root,root,getLeft(), true);
-                        return true;
+                    if (root.getRight()==null){
+                        return false;
                     }
                     else{
-                        //return deleteHelper(old,root.getLeft());
+                        if (old.compareTo(root.getRight())==0){
+                            doDelete(root,root.getRight(),false);
+                        }
                     }
-                }   
+                }
+            }
+        }
+        return false;
+    }
+
+
+    private boolean deleteHelper(Comparable val, TreeNode subroot){
+        if (val.compareTo(subroot.getValue())<=0){
+            if (subroot.getLeft()==null){
+                return false;
+            }
+            else{
+                if (val.compareTo(subroot.getRight())==0){
+                    doDelete(val,subroot.getLeft(),true);
+                    return true;
+                }
+                else{
+                    return deleteHelper(val,subroot.getLeft());
+                }
+            }
+        }
+        else{
+            if (subroot.getRight()==null){
+                return false;
+            }
+            else{
+                if (val.compareTo(subroot.getRight())==0){
+                    doDelete(subroot,subroot.getRight(),false);
+                    return true;
+                }
+                else{
+                    return deleteHelper(val,subroot.getRight());
+                }
             }
         }
     }
+
+
+
+    private void doDelete (TreeNode parent, TreeNode child, boolean isLeft){
+        if (child.getLeft()==null){
+            if(isLeft){
+                parent.setLeft(null);
+            }
+            else{
+                parent.setRight(null);
+            }
+        }
+        else{
+            if (isLeft){
+                parent.setLeft(parent.getRight());
+                parent.setRight(null);
+            }
+            else{
+                parent.setRight(child.getRight());
+                child.setRight(null);
+            }
+        }
+        //to be continued 
+    }
+
+
+
+
+    private void deleteRoot(){
+        if (root.getLeft()==null){
+            if (root.getRight()==null){
+                root=null;
+            }
+            else{
+                root=root.getRight();
+            }
+        }
+        else{
+            if (root.getRight()==null){
+                root= root.getLeft();
+            }
+            else{
+                TreeNode temp = root.getLeft();
+                while (temp.getRight()!=null){
+                    temp=temp.getRight();
+                }
+                temp.setRight(root.getRight());
+                root = root.getLeft();
+            }
+        }
+    }
+
+
+
+
+
+
+    public boolean find(Comparable val){
+        if (root==null )
+            return false;
+        else{
+            if (root.getValue().compareTo(val)==0)
+                return true;
+        }
+        if (root.getValue().compareTo(val)>0)
+            return findHelper(val,root.getLeft());
+        else{
+            return findHelper(val,root.getRight());
+        }
+    }
+    
+
+
+    private boolean findHelper(Comparable val,TreeNode subroot){
+        if (subroot==null)
+            return false;
+        else
+            if (subroot.getValue().compareTo(val)==0)
+                return true;
+            else{
+                if (subroot ==val)
+                return true;
+            }
+        if (subroot.getValue()(.compareTo(val)>1))
+            return findHelper(val,subroot.getLeft());
+        else
+            return findHelper(val,subroot.getRight());
+    }
+    
+
 }
