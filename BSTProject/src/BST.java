@@ -128,7 +128,7 @@ public class BST implements BSTInterface
                         return false;
                     }
                     else{
-                        if (old.compareTo(root.getLeft())==0){
+                        if (old.compareTo(root.getLeft().getValue())==0){
                             doDelete(root,root.getLeft(),true);
                             return true;
                         }
@@ -142,14 +142,17 @@ public class BST implements BSTInterface
                         return false;
                     }
                     else{
-                        if (old.compareTo(root.getRight())==0){
+                        if (old.compareTo(root.getRight().getValue())==0){
                             doDelete(root,root.getRight(),false);
+                            return true;
+                        }
+                        else{
+                            return deleteHelper(old, root.getRight());
                         }
                     }
                 }
             }
         }
-        return false;
     }
 
 
@@ -159,8 +162,8 @@ public class BST implements BSTInterface
                 return false;
             }
             else{
-                if (val.compareTo(subroot.getRight())==0){
-                    doDelete(val,subroot.getLeft(),true);
+                if (val.compareTo(subroot.getLeft().getValue())==0){
+                    doDelete(subroot,subroot.getLeft(),true);
                     return true;
                 }
                 else{
@@ -173,7 +176,7 @@ public class BST implements BSTInterface
                 return false;
             }
             else{
-                if (val.compareTo(subroot.getRight())==0){
+                if (val.compareTo(subroot.getRight().getValue())==0){
                     doDelete(subroot,subroot.getRight(),false);
                     return true;
                 }
@@ -188,24 +191,52 @@ public class BST implements BSTInterface
 
     private void doDelete (TreeNode parent, TreeNode child, boolean isLeft){
         if (child.getLeft()==null){
-            if(isLeft){
-                parent.setLeft(null);
+            if(child.getRight()==null){
+                if (isLeft){
+                    parent.setLeft(null);
+                }
+                else{
+                    parent.setRight(null);
+                }
             }
             else{
-                parent.setRight(null);
+                if (isLeft){
+                    parent.setLeft(parent.getRight());
+                    parent.setRight(null);
+                }
+                else{
+                    parent.setRight(child.getRight());
+                    child.setRight(null);
+                }
             }
         }
         else{
-            if (isLeft){
-                parent.setLeft(parent.getRight());
-                parent.setRight(null);
+            if (child.getRight()==null){
+                if (isLeft){
+                    parent.setLeft(child.getLeft());
+                    child.setLeft(null);
+                }
+                else{
+                    parent.setRight(child.getLeft());
+                    child.setLeft(null);
+                }
             }
             else{
-                parent.setRight(child.getRight());
+                TreeNode val = child.getLeft();
+                while(val.getRight()!=null){
+                    val = val.getRight();
+                }
+                val.setRight(child.getRight());
+                if(isLeft){
+                    parent.setLeft(child.getLeft());
+                }
+                else{
+                    parent.setRight(child.getLeft());
+                }
+                child.setLeft(null);
                 child.setRight(null);
             }
         }
-        //to be continued 
     }
 
 
@@ -266,7 +297,7 @@ public class BST implements BSTInterface
                 if (subroot ==val)
                 return true;
             }
-        if (subroot.getValue()(.compareTo(val)>1))
+        if (subroot.getValue().compareTo(val)>1)
             return findHelper(val,subroot.getLeft());
         else
             return findHelper(val,subroot.getRight());
