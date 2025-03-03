@@ -49,12 +49,14 @@
    tree.printInOrder();
    
    System.out.println();
+   System.out.println();
 
    System.out.println("Deleting Q (has one child)");
    System.out.println("Result: "+tree.delete("Q"));
    System.out.print("Resulting tree: ");
    tree.printInOrder();
 
+   System.out.println();
    System.out.println();
 
    System.out.println("Deleting C (has two children)");
@@ -63,11 +65,21 @@
    tree.printInOrder();
 
    System.out.println();
+   System.out.println();
 
    System.out.println("Deleting O (Root)");
    System.out.println("Result: "+tree.delete("O"));
    System.out.print("Resulting tree: ");
    tree.printInOrder();
+
+   System.out.println();
+   System.out.println();
+   
+   System.out.println("Deleting X (Not in tree)");
+   System.out.println("Result: "+tree.delete("X"));
+   System.out.print("Resulting tree: ");
+   tree.printInOrder();
 	
+   System.out.println();
  }
 }
