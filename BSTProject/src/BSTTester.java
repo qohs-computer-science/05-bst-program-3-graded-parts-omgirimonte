@@ -110,5 +110,11 @@
 // testing size method 
    System.out.println("Testing Size Method");
    System.out.println("Size: "+tree.size());
- }
-}
+
+   System.out.println();
+   System.out.println();
+      //testing isEmpty()
+   System.out.println("Checking to see if the tree is empty");
+   System.out.println("Empty: "+tree.isEmpty());
+ }// end main
+}// end class
